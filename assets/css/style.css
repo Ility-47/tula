@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --blackc: #141414;
+    --index: calc(1vh + 1vw);
+    --transition: 1.25s cubic-bezier(.2, .5, 0, 1); 
+    --transition-cursor: 2s cubic-bezier(.05, .5, 0, 1); 
+}
+
+@font-face {
+    font-family: arsenal_f;
+    src: url('../fonts/arsenal-regular.woff2');
+}
+
+body{
+    background-color: #f0f0f0;
+}
+
+.title{
+    text-align: center;
+    font-size: calc(var(--index) * 2);
+    font-family: arsenal_f, sans-serif;
+    line-height: 0.8;
+
+}
+
+.magicList{
+    font-family: arsenal_f, sans-serif;
+    font-size:calc( var(--index) * 2.75);
+    padding: calc( var(--index) * 1.75)  calc( var(--index) * 2.75) ;
+    
+}
+.magicList__item{
+    cursor: none;
+    color: var(--blackc);
+    text-decoration: none;
+    display: block;
+    line-height: 0.9;
+    padding: calc(var(--index) * 3) calc(var(--index) * 7.5);
+    border-bottom: 1px solid rgba(0, 0, 0, .09);
+    counter-increment: my-counter;
+}
+
+.magicList__item:first-child{
+    border-top: 1.5px solid var(--blackc);
+}
+
+.magicList__item::before{
+    content: '(0' counter(my-counter) ')' ;
+    position: absolute;
+    font-size: calc(var(--index) * 0.95);
+    margin-left: calc(var(--index) * -2.25);
+    margin-top: calc(var(--index) / 2);
+    letter-spacing: .7px;
+    transition: transform var(--transition);
+    transition-delay: .025s;
+    will-change: transform;
+}
+
+.magicList__item:hover .magicList__header,
+.magicList__item:hover::before{
+    transform: translate3d(calc(var(--index) * -5), 0, 0);
+
+}
+
+.magicList__header{
+    width: min-content;
+    transition: transform var(--transition);
+    will-change: transform;
+}
+
+.cursor{
+    --width: calc(var(--index) * 22);
+    --height: calc(var(--index) * 14);
+    position: fixed;
+    width: var(--width);
+    top: calc(var(--height) * -0.5);
+    left: calc(var(--width) * -0.5);
+    overflow: hidden;
+    transform: translate3d(var(--moveX), var(--moveY), 0);
+    transition: transform var(--transition-cursor), height 1s ease;
+    will-change: transform;
+    height: 0;
+    z-index: -1;
+}
+
+.cursor__image{
+    position: relative;
+    width: calc(var(--width) * 2);
+    height: calc(var(--height) * 2);
+    top: calc(var(--height) * -0.4);
+    left: calc(var(--width) * -0.25);
+    background-size: cover;
+    background-position: center;
+    transform: translate3d(calc(var(--moveX) /-5), calc(var(--moveY) / -5), 0), scale(0.5);
+    transition: transform var(--transition-cursor);
+}
+
+.magicList__item:hover .cursor{
+    height: var(--height);
+}
+
+.magicList__item:hover .cursor__image{
+    transform: translate3d(calc(var(--moveX) /-5), calc(var(--moveY) / -5),0) scale(0.75);
+}
